@@ -1,0 +1,14 @@
+{
+    "name": "tic-tac-toe-desktop",
+    "version": "1.0.0",
+    "description": "A modern Tic Tac Toe desktop game",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "electron": "^39.2.2"
+    }
+}
