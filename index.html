@@ -9,7 +9,24 @@
 </head>
 
 <body>
-    <div class="container">
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="logo-container">
+                <div class="logo-x">X</div>
+                <div class="logo-divider"></div>
+                <div class="logo-o">O</div>
+            </div>
+            <h1 class="splash-title">Tic Tac Toe</h1>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p class="splash-text">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Main Game Container -->
+    <div class="container" id="game-container" style="display: none;">
         <h1>Tic Tac Toe</h1>
 
         <div class="controls">
@@ -41,6 +58,7 @@
         <button id="reset" class="reset-btn">Reset Game</button>
     </div>
 
+    <script src="splash.js"></script>
     <script src="renderer.js"></script>
 </body>
 

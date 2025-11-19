@@ -2,7 +2,7 @@
 
 :root {
     --bg-color: #121212;
-    --surface-color: #1e1e1e;
+    --surface-color: rgba(30, 30, 30, 0.8);
     --primary-color: #00e5ff;
     --secondary-color: #ff4081;
     --text-color: #ffffff;
@@ -19,7 +19,9 @@
 
 body {
     font-family: 'Outfit', sans-serif;
-    background-color: var(--bg-color);
+    background: linear-gradient(-45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     color: var(--text-color);
     height: 100vh;
     display: flex;
@@ -27,10 +29,146 @@ body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    position: relative;
 }
 
+body::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 64, 129, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(0, 229, 255, 0.08) 0%, transparent 50%);
+    animation: floatingGlow 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 229, 255, 0.03) 2px,
+            rgba(0, 229, 255, 0.03) 4px);
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Splash Screen Styles */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.splash-screen.fade-out {
+    opacity: 0;
+}
+
+.splash-content {
+    text-align: center;
+    animation: splashFadeIn 1s ease;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    font-size: 6rem;
+    font-weight: 700;
+}
+
+.logo-x {
+    color: var(--primary-color);
+    text-shadow: 0 0 40px var(--primary-color);
+    animation: logoXSpin 2s ease-in-out infinite;
+}
+
+.logo-o {
+    color: var(--secondary-color);
+    text-shadow: 0 0 40px var(--secondary-color);
+    animation: logoOSpin 2s ease-in-out infinite;
+}
+
+.logo-divider {
+    width: 4px;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 0 20px var(--primary-color);
+    animation: dividerPulse 1.5s ease-in-out infinite;
+}
+
+.splash-title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(0, 229, 255, 0.6));
+    animation: titleFloat 3s ease-in-out infinite;
+}
+
+.loading-bar {
+    width: 300px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+
+.loading-progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 20px var(--primary-color);
+    animation: progressGlow 1s ease-in-out infinite;
+}
+
+.splash-text {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    animation: textBlink 1.5s ease-in-out infinite;
+}
+
+/* Game Container */
 .container {
     text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 229, 255, 0.1);
+}
+
+.fade-in {
     animation: fadeIn 0.5s ease-in-out;
 }
 
@@ -41,7 +179,8 @@ h1 {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+    filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.5));
+    animation: titleGlow 3s ease-in-out infinite;
 }
 
 .controls {
@@ -79,19 +218,20 @@ button {
     cursor: pointer;
     border-radius: 8px;
     transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
 }
 
 button:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 229, 255, 0.3);
 }
 
 button.active {
     background-color: var(--primary-color);
     color: #000;
     font-weight: bold;
-    box-shadow: 0 0 15px var(--primary-color);
+    box-shadow: 0 0 20px var(--primary-color);
     border-color: var(--primary-color);
 }
 
@@ -99,6 +239,7 @@ button.active {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
     height: 2rem;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
 }
 
 .board {
@@ -109,12 +250,13 @@ button.active {
     background-color: var(--surface-color);
     padding: var(--grid-gap);
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 229, 255, 0.1);
     margin: 0 auto;
+    backdrop-filter: blur(10px);
 }
 
 .cell {
-    background-color: var(--bg-color);
+    background-color: rgba(18, 18, 18, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -122,26 +264,33 @@ button.active {
     font-weight: 700;
     cursor: pointer;
     border-radius: 8px;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .cell:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
 }
 
 .cell.x {
     color: var(--primary-color);
-    text-shadow: 0 0 10px var(--primary-color);
+    text-shadow: 0 0 20px var(--primary-color);
+    animation: cellPop 0.3s ease;
 }
 
 .cell.o {
     color: var(--secondary-color);
-    text-shadow: 0 0 10px var(--secondary-color);
+    text-shadow: 0 0 20px var(--secondary-color);
+    animation: cellPop 0.3s ease;
 }
 
 .cell.winner {
-    background-color: rgba(255, 255, 255, 0.1);
-    animation: pulse 1s infinite;
+    background-color: rgba(255, 255, 255, 0.15);
+    animation: winnerPulse 1s infinite;
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
 }
 
 .reset-btn {
@@ -153,13 +302,141 @@ button.active {
 }
 
 .reset-btn:hover {
-    box-shadow: 0 0 20px var(--secondary-color);
+    box-shadow: 0 0 30px var(--secondary-color);
+    transform: translateY(-3px);
+}
+
+/* Animations */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes floatingGlow {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(20px, 20px) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes splashFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes logoXSpin {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+}
+
+@keyframes logoOSpin {
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(-180deg) scale(1.1);
+    }
+}
+
+@keyframes dividerPulse {
+
+    0%,
+    100% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scaleY(1.2);
+        opacity: 0.7;
+    }
+}
+
+@keyframes titleFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes progressGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px var(--primary-color);
+    }
+
+    50% {
+        box-shadow: 0 0 30px var(--secondary-color);
+    }
+}
+
+@keyframes textBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes titleGlow {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.5));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 30px rgba(255, 64, 129, 0.6));
+    }
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px);
     }
 
     to {
@@ -168,16 +445,32 @@ button.active {
     }
 }
 
-@keyframes pulse {
+@keyframes cellPop {
     0% {
-        transform: scale(1);
+        transform: scale(0);
+        opacity: 0;
     }
 
     50% {
-        transform: scale(1.05);
+        transform: scale(1.2);
     }
 
     100% {
         transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes winnerPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+    }
+
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 40px rgba(0, 229, 255, 0.9);
     }
 }
