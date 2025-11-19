@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
+
+# Package lock files (optional - uncomment if you want to ignore)
+# package-lock.json
+
+# Electron build artifacts
+*.exe
+*.dmg
+*.app
+*.deb
+*.rpm
