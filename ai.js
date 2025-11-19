@@ -1,7 +1,38 @@
 class AI {
-    constructor(playerSymbol) {
+    constructor(playerSymbol, difficulty = 'hard') {
         this.player = playerSymbol;
         this.opponent = playerSymbol === 'X' ? 'O' : 'X';
+        this.difficulty = difficulty;
+    }
+
+    // Main method to get move based on difficulty
+    getMove(board) {
+        // Determine if AI should make a random move based on difficulty
+        const randomChance = Math.random();
+
+        if (this.difficulty === 'easy' && randomChance < 0.7) {
+            return this.getRandomMove(board);
+        } else if (this.difficulty === 'medium' && randomChance < 0.4) {
+            return this.getRandomMove(board);
+        }
+
+        // Otherwise, make the best move (hard mode or when not making random move)
+        return this.getBestMove(board);
+    }
+
+    // Get a random available move
+    getRandomMove(board) {
+        const availableMoves = [];
+        for (let i = 0; i < 9; i++) {
+            if (board[i] === null) {
+                availableMoves.push(i);
+            }
+        }
+
+        if (availableMoves.length === 0) return -1;
+
+        const randomIndex = Math.floor(Math.random() * availableMoves.length);
+        return availableMoves[randomIndex];
     }
 
     getBestMove(board) {

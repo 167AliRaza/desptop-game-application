@@ -2,7 +2,8 @@ const TicTacToe = require('./game');
 const AI = require('./ai');
 
 const game = new TicTacToe();
-const ai = new AI('O'); // AI plays as O
+let currentDifficulty = 'hard';
+let ai = new AI('O', currentDifficulty); // AI plays as O
 
 const boardElement = document.getElementById('board');
 const cells = document.querySelectorAll('.cell');
@@ -10,6 +11,10 @@ const statusElement = document.getElementById('status');
 const resetBtn = document.getElementById('reset');
 const modePvpBtn = document.getElementById('mode-pvp');
 const modeAiBtn = document.getElementById('mode-ai');
+const difficultyControls = document.getElementById('difficulty-controls');
+const diffEasyBtn = document.getElementById('diff-easy');
+const diffMediumBtn = document.getElementById('diff-medium');
+const diffHardBtn = document.getElementById('diff-hard');
 
 let isAiMode = false;
 let isAiTurn = false;
@@ -60,7 +65,7 @@ function handleCellClick(e) {
 }
 
 function makeAiMove() {
-    const bestMove = ai.getBestMove(game.getBoard());
+    const bestMove = ai.getMove(game.getBoard());
     if (bestMove !== -1) {
         game.makeMove(bestMove);
         updateUI();
@@ -78,6 +83,26 @@ function setMode(mode) {
     isAiMode = mode === 'ai';
     modePvpBtn.classList.toggle('active', !isAiMode);
     modeAiBtn.classList.toggle('active', isAiMode);
+
+    // Show/hide difficulty controls
+    if (isAiMode) {
+        difficultyControls.classList.add('show');
+    } else {
+        difficultyControls.classList.remove('show');
+    }
+
+    resetGame();
+}
+
+function setDifficulty(difficulty) {
+    currentDifficulty = difficulty;
+    ai = new AI('O', currentDifficulty); // Recreate AI with new difficulty
+
+    // Update button states
+    diffEasyBtn.classList.toggle('active', difficulty === 'easy');
+    diffMediumBtn.classList.toggle('active', difficulty === 'medium');
+    diffHardBtn.classList.toggle('active', difficulty === 'hard');
+
     resetGame();
 }
 
@@ -85,5 +110,8 @@ cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 resetBtn.addEventListener('click', resetGame);
 modePvpBtn.addEventListener('click', () => setMode('pvp'));
 modeAiBtn.addEventListener('click', () => setMode('ai'));
+diffEasyBtn.addEventListener('click', () => setDifficulty('easy'));
+diffMediumBtn.addEventListener('click', () => setDifficulty('medium'));
+diffHardBtn.addEventListener('click', () => setDifficulty('hard'));
 
 updateUI();
