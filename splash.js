@@ -1,18 +1,15 @@
 // Splash screen logic
 document.addEventListener('DOMContentLoaded', () => {
     const splashScreen = document.getElementById('splash-screen');
-    const gameContainer = document.getElementById('game-container');
+    const modeScreen = document.getElementById('mode-screen');
     const loadingProgress = document.querySelector('.loading-progress');
 
     // Create sound using Web Audio API
     const playSound = () => {
         try {
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-            // Create a futuristic startup sound
             const now = audioContext.currentTime;
 
-            // First tone (rising)
             const oscillator1 = audioContext.createOscillator();
             const gainNode1 = audioContext.createGain();
             oscillator1.connect(gainNode1);
@@ -28,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
             oscillator1.start(now);
             oscillator1.stop(now + 0.3);
 
-            // Second tone (higher pitch)
             const oscillator2 = audioContext.createOscillator();
             const gainNode2 = audioContext.createGain();
             oscillator2.connect(gainNode2);
@@ -43,13 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             oscillator2.start(now + 0.15);
             oscillator2.stop(now + 0.45);
-
         } catch (err) {
             console.log('Sound generation failed:', err);
         }
     };
 
-    // Animate loading bar
     let progress = 0;
     const loadingInterval = setInterval(() => {
         progress += 2;
@@ -58,19 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (progress >= 100) {
             clearInterval(loadingInterval);
 
-            // Wait a bit then hide splash screen
             setTimeout(() => {
                 splashScreen.classList.add('fade-out');
 
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
-                    gameContainer.style.display = 'block';
-                    gameContainer.classList.add('fade-in');
+                    modeScreen.style.display = 'flex';
+                    modeScreen.classList.add('fade-in');
                 }, 500);
             }, 500);
         }
     }, 30);
 
-    // Play sound after a short delay
     setTimeout(playSound, 100);
 });

@@ -25,41 +25,116 @@
         </div>
     </div>
 
-    <!-- Main Game Container -->
-    <div class="container" id="game-container" style="display: none;">
-        <h1>Tic Tac Toe</h1>
-
-        <div class="controls">
-            <button id="mode-pvp" class="active">2 Players</button>
-            <button id="mode-ai">vs AI</button>
+    <!-- Mode Selection Screen -->
+    <div id="mode-screen" class="screen" style="display: none;">
+        <div class="screen-content">
+            <h1 class="screen-title">Choose Game Mode</h1>
+            <div class="mode-buttons">
+                <button class="mode-btn" id="btn-single-player">
+                    <div class="mode-icon">🤖</div>
+                    <div class="mode-name">Single Player</div>
+                    <div class="mode-desc">Play against AI</div>
+                </button>
+                <button class="mode-btn" id="btn-two-player">
+                    <div class="mode-icon">👥</div>
+                    <div class="mode-name">Two Players</div>
+                    <div class="mode-desc">Play with a friend</div>
+                </button>
+            </div>
         </div>
+    </div>
 
-        <div class="difficulty-controls" id="difficulty-controls">
-            <label>AI Difficulty:</label>
-            <button id="diff-easy">Easy</button>
-            <button id="diff-medium">Medium</button>
-            <button id="diff-hard" class="active">Hard</button>
+    <!-- Player Setup Screen -->
+    <div id="setup-screen" class="screen" style="display: none;">
+        <div class="screen-content">
+            <h1 class="screen-title" id="setup-title">Player Setup</h1>
+
+            <!-- Player Names -->
+            <div class="input-group">
+                <label for="player1-name">Player 1 Name (X)</label>
+                <input type="text" id="player1-name" placeholder="Enter name" maxlength="15">
+            </div>
+
+            <div class="input-group" id="player2-group">
+                <label for="player2-name">Player 2 Name (O)</label>
+                <input type="text" id="player2-name" placeholder="Enter name" maxlength="15">
+            </div>
+
+            <!-- Difficulty Selection (for single player) -->
+            <div id="difficulty-group" style="display: none;">
+                <label class="difficulty-label">AI Difficulty</label>
+                <div class="difficulty-buttons">
+                    <button class="diff-btn" data-difficulty="easy">
+                        <div class="diff-icon">😊</div>
+                        <div class="diff-name">Easy</div>
+                    </button>
+                    <button class="diff-btn active" data-difficulty="medium">
+                        <div class="diff-icon">😐</div>
+                        <div class="diff-name">Medium</div>
+                    </button>
+                    <button class="diff-btn" data-difficulty="hard">
+                        <div class="diff-icon">😈</div>
+                        <div class="diff-name">Hard</div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="setup-actions">
+                <button class="btn-secondary" id="btn-back-to-mode">Back</button>
+                <button class="btn-primary" id="btn-start-game">Start Game</button>
+            </div>
         </div>
+    </div>
 
-        <div class="status" id="status">Player X's Turn</div>
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen" style="display: none;">
+        <div class="game-content">
+            <div class="game-header">
+                <h2 class="player-info" id="player1-info">Player 1</h2>
+                <div class="score-display">
+                    <span id="score-display">0 - 0</span>
+                </div>
+                <h2 class="player-info" id="player2-info">Player 2</h2>
+            </div>
 
-        <div class="board" id="board">
-            <div class="cell" data-index="0"></div>
-            <div class="cell" data-index="1"></div>
-            <div class="cell" data-index="2"></div>
-            <div class="cell" data-index="3"></div>
-            <div class="cell" data-index="4"></div>
-            <div class="cell" data-index="5"></div>
-            <div class="cell" data-index="6"></div>
-            <div class="cell" data-index="7"></div>
-            <div class="cell" data-index="8"></div>
+            <div class="status" id="status">Player X's Turn</div>
+
+            <div class="board" id="board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+
+            <div class="game-actions">
+                <button class="btn-secondary" id="btn-home">Home</button>
+                <button class="btn-primary" id="btn-reset">New Round</button>
+            </div>
         </div>
+    </div>
 
-        <button id="reset" class="reset-btn">Reset Game</button>
+    <!-- Victory/Defeat Modal -->
+    <div id="result-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="result-animation" id="result-animation">
+                <div class="confetti" id="confetti"></div>
+            </div>
+            <h2 class="result-title" id="result-title">Victory!</h2>
+            <p class="result-message" id="result-message">Player X Wins!</p>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="btn-modal-home">Home</button>
+                <button class="btn-primary" id="btn-play-again">Play Again</button>
+            </div>
+        </div>
     </div>
 
     <script src="splash.js"></script>
-    <script src="renderer.js"></script>
+    <script src="game-manager.js"></script>
 </body>
 
 </html>

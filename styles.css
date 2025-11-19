@@ -62,16 +62,49 @@ body::after {
     opacity: 0.5;
 }
 
-/* Splash Screen Styles */
+/* Common Screen Styles */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.screen-content,
+.game-content {
+    text-align: center;
+    backdrop-filter: blur(10px);
+    padding: 3rem;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 229, 255, 0.2);
+    animation: fadeIn 0.5s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.screen-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.5));
+}
+
+/* Splash Screen */
 .splash-screen {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(-45deg, #0a0a0a, #1a1a2e, #16213e, #0f3460);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -155,84 +188,186 @@ body::after {
     animation: textBlink 1.5s ease-in-out infinite;
 }
 
-/* Game Container */
-.container {
-    text-align: center;
-    animation: fadeIn 0.5s ease-in-out;
-    position: relative;
-    z-index: 1;
-    backdrop-filter: blur(10px);
+/* Mode Selection Screen */
+.mode-buttons {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.mode-btn {
+    background: var(--surface-color);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
     padding: 2rem;
-    border-radius: 20px;
-    background: rgba(0, 0, 0, 0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 229, 255, 0.1);
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.5));
-    animation: titleGlow 3s ease-in-out infinite;
-}
-
-.controls {
-    margin-bottom: 2rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.difficulty-controls {
-    margin-bottom: 1.5rem;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.difficulty-controls.show {
-    display: flex;
-}
-
-.difficulty-controls label {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-right: 0.5rem;
-}
-
-button {
-    background-color: var(--surface-color);
-    color: var(--text-color);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 10px 20px;
-    font-family: inherit;
-    font-size: 1rem;
+    width: 200px;
     cursor: pointer;
-    border-radius: 8px;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
 }
 
-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 229, 255, 0.3);
+.mode-btn:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4);
 }
 
-button.active {
-    background-color: var(--primary-color);
-    color: #000;
-    font-weight: bold;
-    box-shadow: 0 0 20px var(--primary-color);
+.mode-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.mode-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.mode-desc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Setup Screen */
+.input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-group label,
+.difficulty-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
     border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+}
+
+.difficulty-label {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.difficulty-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.diff-btn {
+    background: var(--surface-color);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    width: 120px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.diff-btn:hover {
+    transform: scale(1.05);
+    border-color: var(--primary-color);
+}
+
+.diff-btn.active {
+    border-color: var(--primary-color);
+    background: rgba(0, 229, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+}
+
+.diff-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.diff-name {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.setup-actions,
+.game-actions,
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), #00b8d4);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+}
+
+.btn-secondary {
+    background: var(--surface-color);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Game Screen */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 2rem;
+}
+
+.player-info {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    flex: 1;
+}
+
+.score-display {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color);
 }
 
 .status {
@@ -251,7 +386,7 @@ button.active {
     padding: var(--grid-gap);
     border-radius: 15px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 229, 255, 0.1);
-    margin: 0 auto;
+    margin: 0 auto 2rem;
     backdrop-filter: blur(10px);
 }
 
@@ -293,17 +428,71 @@ button.active {
     box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
 }
 
-.reset-btn {
-    margin-top: 2rem;
-    background: linear-gradient(45deg, var(--secondary-color), #ff80ab);
-    border: none;
-    color: white;
-    font-weight: bold;
+/* Result Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
 }
 
-.reset-btn:hover {
-    box-shadow: 0 0 30px var(--secondary-color);
-    transform: translateY(-3px);
+.modal-content {
+    background: var(--surface-color);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    animation: modalSlideIn 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.result-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.result-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.result-message {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 1;
+}
+
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: confettiFall 3s linear infinite;
 }
 
 /* Animations */
@@ -421,27 +610,13 @@ button.active {
     }
 }
 
-@keyframes titleGlow {
-
-    0%,
-    100% {
-        filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.5));
-    }
-
-    50% {
-        filter: drop-shadow(0 0 30px rgba(255, 64, 129, 0.6));
-    }
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(30px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
@@ -473,4 +648,26 @@ button.active {
         transform: scale(1.08);
         box-shadow: 0 0 40px rgba(0, 229, 255, 0.9);
     }
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease;
 }
